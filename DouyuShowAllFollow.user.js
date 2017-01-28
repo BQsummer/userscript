@@ -2,7 +2,7 @@
 // @name         DouyuShowAllFollow
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  ÏÔÊ¾ËùÓĞ¹Ø×¢µÄ¶·ÓãÖ÷²¥ÁĞ±í£¬Ä¬ÈÏÊÇÖ»ÏÔÊ¾5¸ö
+// @description  æ˜¾ç¤ºæ‰€æœ‰å…³æ³¨çš„æ–—é±¼ä¸»æ’­åˆ—è¡¨ï¼Œé»˜è®¤æ˜¯åªæ˜¾ç¤º5ä¸ª
 // @author       BQsummer
 // @match        https://www.douyu.com/*
 // @exclude      https://www.douyu.com/room/my_follow
@@ -13,19 +13,19 @@
 (function() {
     'use strict';
     //div.o-follow  ul.f-list
-    $("div.o-follow").mouseover(function(){
+    $("div.o-follow").mouseenter(function(){
         //$("ul.f-list").mouseover(function(){
         $.ajax({
             type: "GET",
             url: "https://www.douyu.com/room/my_follow",
             success: function(data){
-                //½²»ñÈ¡µ½µÄÒÑ¹Ø×¢Ö÷²¥ĞÅÏ¢Ìí¼Óµ½documentÖĞ
+                //è®²è·å–åˆ°çš„å·²å…³æ³¨ä¸»æ’­ä¿¡æ¯æ·»åŠ åˆ°documentä¸­
                 var body_reg = /<div id="live-list-content"[^>]*>([\s\S]*)<\/div>/;
                 var result = body_reg.exec(data)[1];
                 $("body").append("<div id='ajaxCon' class='mySel' style='display: none;'>" + result+ "</div>");
-                //É¾³ıÔ­Ö÷²¥ÁĞ±í
+                //åˆ é™¤åŸä¸»æ’­åˆ—è¡¨
                 $("ul.f-list").children().remove();
-                //Ìî³äÖ÷²¥ÁĞ±í
+                //å¡«å……ä¸»æ’­åˆ—è¡¨
                 if(!$("div.o-follow").hasClass("bq-change")) {
                     $("div.o-follow").addClass("bq-change");
                     var $titles = $("li[data-is-on='1']");
@@ -42,7 +42,7 @@
                         href = "/" + $(this).attr("data-rid");
                         player =  $(this).children("a").children("div").children("p").children("span[class~='dy-name']").text();
                         num = $(this).children("a").children("div").children("p").children("span[class~='dy-num']").text();
-                        $("ul.f-list").append("<li><p><a href='" + href + "' target='_blank'>" + title + "</a></p><span><a href='" + href + "' class='head-ico1'>ÒÑ²¥¡¡¡¡·ÖÖÓ</a><a href='" + href + "' class='head-ico2'>" + player + "</a><a href='" + href + "' class='head-ico3'>" + num + "</a></span></li>");
+                        $("ul.f-list").append("<li><p><a href='" + href + "' target='_blank'>" + title + "</a></p><span><a href='" + href + "' class='head-ico1'>å·²æ’­ã€€ã€€åˆ†é’Ÿ</a><a href='" + href + "' class='head-ico2'>" + player + "</a><a href='" + href + "' class='head-ico3'>" + num + "</a></span></li>");
                     });
                     $("div.f-pop").css({'height' : '375px', 'width' : '365', 'overflow-y' :'auto'});
                 }
@@ -50,10 +50,10 @@
         });
     });
     $("div.f-pop").mouseleave(function(){
-        //É¾³ıbodyºóÌí¼ÓµÄÖ÷²¥ĞÅÏ¢
+        //åˆ é™¤bodyåæ·»åŠ çš„ä¸»æ’­ä¿¡æ¯
         $(".mySel").remove();
         $('div[style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; background: rgb(255, 255, 255);"]').remove();
-        //ÒÆ³ıbq-change
+        //ç§»é™¤bq-change
         $("div.o-follow").removeClass("bq-change");
     });
 })();
